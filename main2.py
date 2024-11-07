@@ -1,12 +1,15 @@
 import numpy as np
 import pandas as pd
 data = pd.read_csv('swedish_population_by_year_and_sex_1860-2022.csv', header= 0)
-print(data['age'])
+#print(data['age'])
 data.describe()
+
 #convert the string values from the csv to numeric value
 data['age'] = pd.to_numeric(data['age'],errors='coerce')
-for i in range(1860,2023):
-    string = str(i)
+
+#convert year columns to numeric values
+for year in range(1860,2023):
+    string = str(year)
     data[string]=pd.to_numeric(data[string],errors='coerce')
 #make a new dataframe
 new_df = data.copy()
@@ -31,14 +34,17 @@ print(df_2)
 
 # function to calculate dependency ratio
 def depend_ratio(children,elder,lab_force):
-    DR = ((children+elder)/lab_force)*100
-    return DR
+    return ((children+elder)/lab_force)*100 if lab_force != 0 else np.nan
+    
 #create an array with the dependency ratios
 dependency_ratios = []
 for i in range(1860,2023):
     # we use append in order to add the value to the list
-    string = str(i)
-    dependency_ratios.append(depend_ratio(df_2['Children'][string],df_2['Elderly'][string],df_2['Labor force'][string]))
+    year_string = str(i)
+    children = df_2.loc['Children', year_string]
+    elderly = df_2.loc['Elderly',year_string]
+    labor_force = df_2.loc['Labor force', year_string]
+    dependency_ratios.append(depend_ratio(children,elderly,labor_force))
 #convert list into array
 dependency_ratios=np.array(dependency_ratios)
 print(dependency_ratios)
