@@ -48,7 +48,6 @@ for i in range(1860,2023):
 dependency_ratios=np.array(dependency_ratios)
 print(dependency_ratios)
 
-
 # Create the plot
 years = np.arange(1860, 2023)
 plt.figure(figsize=(12, 6))
@@ -57,10 +56,34 @@ plt.title("Sweden's Dependency Ratio (1860-2022)")
 plt.xlabel('Year')
 plt.ylabel('Dependency Ratio')
 plt.grid(True)
-
-
 plt.tight_layout()
 plt.show()
 
+#calculate fraction
+children_fraction = []
+elderly_fraction = []
+dependent_fraction = []
 
+for i in range(1860,2023):
+    year_string = str(i)
+    children = df_2.loc['Children', year_string]
+    elderly = df_2.loc['Elderly', year_string]
+    labor_force = df_2.loc['Labor force', year_string]
+    total_population = children + elderly + labor_force
+    
+    children_fraction.append((children / total_population)*100)
+    elderly_fraction.append((elderly / total_population)*100)
+    dependent_fraction.append(((children + elderly) / total_population)*100)
 
+# Plot population fractions
+plt.figure(figsize=(12, 6))
+plt.plot(years, children_fraction, label='Children (0-14)', color = 'red')
+plt.plot(years, elderly_fraction, label='Elderly (65+)', color = 'blue')
+plt.plot(years, dependent_fraction, label='Total Dependent', color = 'green')
+plt.title('Population Fractions in Sweden (1860-2022)')
+plt.xlabel('Year')
+plt.ylabel('Percentage of Total Population')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
