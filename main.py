@@ -56,7 +56,6 @@ plt.title("Sweden's Dependency Ratio (1860-2022)")
 plt.xlabel('Year')
 plt.ylabel('Dependency Ratio')
 plt.grid(True)
-plt.tight_layout()
 plt.show()
 
 #calculate fraction
@@ -85,5 +84,4 @@ plt.xlabel('Year')
 plt.ylabel('Percentage of Total Population')
 plt.legend()
 plt.grid(True)
-plt.tight_layout()
 plt.show()
