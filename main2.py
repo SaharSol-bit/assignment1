@@ -58,6 +58,8 @@ plt.title("Sweden's Dependency Ratio (1860-2022)")
 plt.xlabel('Year')
 plt.ylabel('Dependency Ratio')
 plt.grid(True)
+plt.legend()
+plt.show()
 
 
 
