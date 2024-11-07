@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+
 data = pd.read_csv('swedish_population_by_year_and_sex_1860-2022.csv', header= 0)
 print(data['age'])
 data.describe()
@@ -25,9 +27,9 @@ new_df['Category']=data['age'].apply(age_classif)
 df_2 = new_df.groupby(['Category']).sum(numeric_only=True) #sum all the values from each category per year
 df_2 = df_2.drop(columns=['age']) #delete age column
 print(df_2)
-#df['dependency_ratio'] = ((df_2['Children']+df_2['Elderly'])/df_2['Labor force'])*100
-#convert to csv
-#df_2.to_csv('categories_per_year.csv',index=True)
+
+#df_2.to_csv('categories_per_year2.csv',index=True)
+categories = pd.read_csv('categories_per_year2.csv', header= 0)
 
 # function to calculate dependency ratio
 def depend_ratio(children,elder,lab_force):
@@ -38,10 +40,28 @@ dependency_ratios = []
 for i in range(1860,2023):
     # we use append in order to add the value to the list
     string = str(i)
-    dependency_ratios.append(depend_ratio(df_2['Children'][string],df_2['Elderly'][string],df_2['Labor force'][string]))
+    dependency_ratios.append(depend_ratio(categories[string][0],categories[string][1],categories[string][2]))
 #convert list into array
 dependency_ratios=np.array(dependency_ratios)
 print(dependency_ratios)
+
+# array of years
+years=[]
+for k in range(1860,2023):
+   years.append(k)
+#convert list to array
+years=np.array(years)
+print(years)
+
+
+# Plot dependency ratios
+fig, ax = plt.subplots() #Create a figure containing single axes
+ax.plot(years,dependency_ratios)
+ax.set_xlabel('years')
+ax.set_ylabel('dependency ratio')
+ax.set_title('Dependency ratio in Sweden')
+plt.show()
+
 
 
 
