@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
 data = pd.read_csv('swedish_population_by_year_and_sex_1860-2022.csv', header= 0)
 #print(data['age'])
 data.describe()
@@ -39,7 +38,6 @@ def depend_ratio(children,elder,lab_force):
     return ((children+elder)/lab_force)*100 if lab_force != 0 else np.nan
     
 #create an array with the dependency ratios
-
 dependency_ratios = []
 for i in range(1860,2023):
     # we use append in order to add the value to the list
@@ -53,15 +51,13 @@ dependency_ratios=np.array(dependency_ratios)
 print(dependency_ratios)
 
 # Create the plot
-years= range(1860,2023)
+years = np.arange(1860, 2023)
 plt.figure(figsize=(12, 6))
 plt.plot(years, dependency_ratios)
 plt.title("Sweden's Dependency Ratio (1860-2022)")
 plt.xlabel('Year')
 plt.ylabel('Dependency Ratio')
 plt.grid(True)
-plt.tight_layout()
-plt.show()
 
 
 
